@@ -26,10 +26,7 @@ public class FlipFitGymOwnerBusiness implements IFlipFitGymOwner {
         return new ArrayList<>(); // Returning an empty list as a placeholder
     }
 
-    public List<FlipFitPayments> viewPayments() {
-        System.out.println("Listing Payments");
-        return new ArrayList<>(); // Returning an empty list as a placeholder
-    }
+
 
     public FlipFitGymOwner editDetails(FlipFitGymOwner owner) {
         System.out.println("Editing details for owner: " + owner.getUserName());

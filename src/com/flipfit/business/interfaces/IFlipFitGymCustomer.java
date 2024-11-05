@@ -1,6 +1,5 @@
 package com.flipfit.business.interfaces;
 
-import com.flipfit.exceptions.InvalidChoiceException;
 import com.flipfit.bean.FlipFitBooking;
 import com.flipfit.bean.FlipFitGymCentre;
 import com.flipfit.bean.FlipFitGymCustomer;
@@ -16,10 +15,8 @@ public interface IFlipFitGymCustomer {
     public FlipFitBooking checkBookingConflicts(int userId, int slotTime);
     //Retrieves a list of all gym centers.
     public List<FlipFitGymCentre> viewCentres();
-    //Processes a payment for a specific user.
-    public boolean makePayment(int userId);
     //Edits the details of an existing customer.
-    public FlipFitGymCustomer editDetails(FlipFitGymCustomer flipFitGymCustomer) throws InvalidChoiceException;
+    public FlipFitGymCustomer editDetails(FlipFitGymCustomer flipFitGymCustomer);
     //Authenticates a customer login using provided user details.
     public FlipFitGymCustomer login(FlipFitUser flipFitUser);
     //Registers a new customer in the system.
