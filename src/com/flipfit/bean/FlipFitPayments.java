@@ -2,7 +2,7 @@ package com.flipfit.bean;
 
 public class FlipFitPayments {
     private int userID;
-    // 1 -> UPI / 2 -> Debit Card
+    // 1 -> UPI / 2 -> Debit Card / 3-> Cash
     private int paymentType;
 
     public String getPaymentInfo() {
