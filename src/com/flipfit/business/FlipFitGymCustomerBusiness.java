@@ -38,6 +38,7 @@ public class FlipFitGymCustomerBusiness implements IFlipFitGymCustomer {
         return new FlipFitGymCustomer();
 
     }
+
     @Override
     public FlipFitGymCustomer registerCustomer(FlipFitGymCustomer flipFitGymCustomer) {
 
