@@ -44,14 +44,14 @@ public class Customer {
                         for (FlipFitGymCentre centre : centreList) {
                             System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " Pincode is: " + centre.getPincode());
                         }
-                        System.out.println("Choose a centre you want to book slot in");
+                        System.out.println("Choose a centre (via centre ID) you want to book slot in");
                         int centreId = sc.nextInt();
                         List<FlipFitSlots> slotsList = new ArrayList<>();
                         System.out.println("These are the available slots:");
                         for (FlipFitSlots flipFitSlots : slotsList) {
                             System.out.println("Slot Id is: " + flipFitSlots.getSlotId() + " Slot Timing is: " + flipFitSlots.getSlotTime() + " Availability is: " + flipFitSlots.getSeatsAvailable() + " CentreId is: " + flipFitSlots.getCentreId());
                         }
-                        System.out.println("Give the startTime you wish to book");
+                        System.out.println("Give the startTime you wish to book via integer");
                         int startTime = sc.nextInt();
                         System.out.println("Give the centre ID: ");
                         int centreID = sc.nextInt();
