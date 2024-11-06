@@ -14,6 +14,7 @@ public class Admin {
             System.out.println("2. View Approved Owners");
             System.out.println("3. View all FlipFit Customers");
             System.out.println("4. View all Centres Using OwnerId");
+            System.out.println("5. Delete Customer/Owner");
             int choice = sc.nextInt();
 
             switch (choice) {
@@ -55,6 +56,33 @@ public class Admin {
                         for (FlipFitGymCentre gymCentre : flipFitGymCentres) {
                             System.out.println("CentreID: " + gymCentre.getCentreID() + " City :" + gymCentre.getCity() + " Capacity: " + gymCentre.getCapacity());
                         }
+                    }
+                    break;
+                }
+                case 5: {
+                    System.out.println("Do you want to delete a Customer or Gym Owner? (Enter 'Customer' or 'Owner')");
+                    String userType = sc.next();
+
+                    if (userType.equalsIgnoreCase("Customer")) {
+                        List<FlipFitGymCustomer> customersList = new ArrayList<>();
+                        for (FlipFitGymCustomer customer : customersList) {
+                            System.out.println("CustomerID: " + customer.getUserId() + " CustomerName: " + customer.getUserName());
+                        }
+                        System.out.println("Enter the CustomerID of the customer you wish to delete:");
+                        String customerId = sc.next();
+                        // TODO: Implement customer deletion logic
+                        System.out.println("Customer with ID " + customerId + " has been deleted.");
+                    } else if (userType.equalsIgnoreCase("Owner")) {
+                        List<FlipFitGymOwner> flipFitGymOwnerList = new ArrayList<>();
+                        for (FlipFitGymOwner owner : flipFitGymOwnerList) {
+                            System.out.println("Owner ID: " + owner.getUserId() + " Aadhar: " + owner.getAadharNumber());
+                        }
+                        System.out.println("Enter the OwnerID of the owner you wish to delete:");
+                        String ownerId = sc.next();
+                        // TODO: Implement gym owner deletion logic
+                        System.out.println("Gym Owner with ID " + ownerId + " has been deleted.");
+                    } else {
+                        System.out.println("Invalid option. Please choose 'Customer' or 'Owner'.");
                     }
                     break;
                 }

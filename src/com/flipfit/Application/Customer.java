@@ -25,7 +25,10 @@ public class Customer {
                 System.out.println("Choose an option:" +
                         "\n 1. View Booked Slots" +
                         "\n 2. View Centres" +
-                        "\n 3. Logout");
+                        "\n 3. Update Profile" +
+                        "\n 4. Make Bookings" +
+                        "\n 5. View Payment History" +
+                        "\n 6. Logout");
                 choice = sc.nextInt();
                 switch (choice) {
                     case 1: {
@@ -57,7 +60,38 @@ public class Customer {
                         int centreID = sc.nextInt();
                         break;
                     }
-                    case 3:
+                    case 3: {
+                        System.out.println("Update Profile:");
+                        System.out.println("Enter your new contact number:");
+                        String newContact = sc.next();
+                        // TO-DO other updates
+                        FlipFitGymCustomerBusiness.updateCustomerProfile(userId, newContact);
+                        System.out.println("Profile updated successfully.");
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("Make Booking:");
+                        System.out.println("Enter the centre ID for booking:");
+                        int centreId = sc.nextInt();
+                        System.out.println("Enter the slot ID you want to book:");
+                        int slotId = sc.nextInt();
+                        BookingsBusiness.makeBooking(userId, centreId, slotId);
+                        System.out.println("Booking successful.");
+                        break;
+                    }
+                    case 5: {
+                        System.out.println("View Payment History:");
+                        List<String> paymentHistory = FlipFitGymCustomerBusiness.getPaymentHistory(userId);
+                        if (paymentHistory.isEmpty()) {
+                            System.out.println("No payment history found.");
+                        } else {
+                            for (String payment : paymentHistory) {
+                                System.out.println(payment);
+                            }
+                        }
+                        break;
+                    }
+                    case 6:
                     {
                         System.out.println("successful logout");
                     }
@@ -66,7 +100,7 @@ public class Customer {
                     }
                 }
             }
-            while (choice != 4) ;
+            while (choice != 6) ;
         } catch (Error e) {
             System.out.println("Please enter a valid choice");
         }

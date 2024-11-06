@@ -8,7 +8,16 @@ import java.util.List;
 
 
 public class FlipFitGymCustomerBusiness implements IFlipFitGymCustomer {
-    
+
+    public static void updateCustomerProfile(int userId, String newContact) {
+        //todo
+    }
+
+    public static List<String> getPaymentHistory(int userId) {
+        //todo
+        return null;
+    }
+
     @Override
     public List<FlipFitBooking> viewBookedSlots(int userId) {
 

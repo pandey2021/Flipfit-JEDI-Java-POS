@@ -9,6 +9,14 @@ import java.util.List;
 public class FlipFitGymCentreBusiness implements IFlipFitGymCentre {
 
 
+    public static void updateCapacity(int centreID, int newCapacity) {
+        //todo
+    }
+
+    public static void updateSlotAvailability(int centreID, int slotID, int newSeatsAvailable) {
+        //todo
+    }
+
     public FlipFitGymCentre updateGymCentre(FlipFitGymCentre flipFitGymCentre){
         System.out.println("Updating Gym Centre:> ");
         return flipFitGymCentre;
