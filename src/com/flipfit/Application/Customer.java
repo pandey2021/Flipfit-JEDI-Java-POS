@@ -23,29 +23,28 @@ public class Customer {
             do {
                 System.out.println("FlipFit Customer Menu:> ");
                 System.out.println("Choose an option:" +
-                        "\n 1. View Booked Slots" +
+                        "\n 1. Edit Profile" +
                         "\n 2. View Centres" +
-                        "\n 3. Update Profile" +
-                        "\n 4. Make Bookings" +
+                        "\n 3. Make Booking" +
+                        "\n 4. View Booked Slots" +
                         "\n 5. View Payment History" +
                         "\n 6. Logout");
                 choice = sc.nextInt();
                 switch (choice) {
                     case 1: {
-                        System.out.println("View Booked Slots:");
-                        System.out.println("Type 2. If you wish to cancel");
-                        choice = sc.nextInt();
-                        if (choice == 2) {
-                            System.out.println("Choose the booking ID you wish to cancel");
-                            int bookingId = sc.nextInt();
-                        }
+                        System.out.println("Edit Profile:");
+                        System.out.println("Enter your new contact number:");
+                        String newContact = sc.next();
+                        // TO-DO other updates
+                        FlipFitGymCustomerBusiness.updateCustomerProfile(userId, newContact);
+                        System.out.println("Profile updated successfully.");
                         break;
                     }
                     case 2: {
                         System.out.println("View Centres");
                         List<FlipFitGymCentre> centreList = new ArrayList<>();
                         for (FlipFitGymCentre centre : centreList) {
-                            System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " Pincode is: " + centre.getPincode());
+                            System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " PinCode is: " + centre.getPincode());
                         }
                         System.out.println("Choose a centre (via centre ID) you want to book slot in");
                         int centreId = sc.nextInt();
@@ -61,15 +60,6 @@ public class Customer {
                         break;
                     }
                     case 3: {
-                        System.out.println("Update Profile:");
-                        System.out.println("Enter your new contact number:");
-                        String newContact = sc.next();
-                        // TO-DO other updates
-                        FlipFitGymCustomerBusiness.updateCustomerProfile(userId, newContact);
-                        System.out.println("Profile updated successfully.");
-                        break;
-                    }
-                    case 4: {
                         System.out.println("Make Booking:");
                         System.out.println("Enter the centre ID for booking:");
                         int centreId = sc.nextInt();
@@ -77,6 +67,16 @@ public class Customer {
                         int slotId = sc.nextInt();
                         BookingsBusiness.makeBooking(userId, centreId, slotId);
                         System.out.println("Booking successful.");
+                        break;
+                    }
+                    case 4: {
+                        System.out.println("View Booked Slots:");
+                        System.out.println("Type 2. If you wish to cancel");
+                        choice = sc.nextInt();
+                        if (choice == 2) {
+                            System.out.println("Choose the booking ID you wish to cancel");
+                            int bookingId = sc.nextInt();
+                        }
                         break;
                     }
                     case 5: {
