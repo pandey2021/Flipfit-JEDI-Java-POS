@@ -1,7 +1,13 @@
 package com.flipfit.Application;
 
 import com.flipfit.bean.*;
-
+import com.flipfit.bean.FlipFitAdmin;
+import com.flipfit.business.FlipFitAdminBusiness;
+import com.flipfit.business.FlipFitGymOwnerBusiness;
+import com.flipfit.business.interfaces.IFlipFitAdmin;
+import com.flipfit.dao.classes.FlipFitAdminDAOImpl;
+import com.flipfit.dao.classes.FlipFitAdminDAOImpl;
+import com.flipfit.dao.interfaces.IFlipFitAdminDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +16,12 @@ public class Admin {
     public static void getAdminView() throws Error {
         try {
             Scanner sc = new Scanner(System.in);
+            FlipFitAdminDAOImpl adminUser = new FlipFitAdminDAOImpl();
+            FlipFitAdminBusiness adminService = new FlipFitAdminBusiness(adminUser);
+
+//            IFlipFitAdminDAO adminDAO = new FlipFitAdminDAOImpl();
+//            FlipFitAdminBusiness adminBusiness = new FlipFitAdminBusiness(adminDAO);
+
             System.out.println("1. View Pending Requests");
             System.out.println("2. View Approved Owners");
             System.out.println("3. View all FlipFit Customers");
@@ -19,7 +31,7 @@ public class Admin {
 
             switch (choice) {
                 case 1: {
-                    List<FlipFitGymOwner> flipFitGymOwnerList = new ArrayList<>();
+                    List<FlipFitGymOwner> flipFitGymOwnerList = adminService.getPendingOwnerList();
                     for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
                         System.out.println("Owner ID :" + flipFitGymOwner.getUserId() + " Aadhar :" + flipFitGymOwner.getAadharNumber());
                     }
@@ -30,14 +42,14 @@ public class Admin {
                 }
                 case 2: {
                     System.out.println("Printing list of Approved Owners");
-                    List<FlipFitGymOwner> flipFitGymOwnerList = new ArrayList<>();
+                    List<FlipFitGymOwner> flipFitGymOwnerList = adminService.getApprovedOwnerList();
                     for (FlipFitGymOwner flipFitGymOwner : flipFitGymOwnerList) {
                         System.out.println("Owner ID :" + flipFitGymOwner.getUserId() + " Aadhar :" + flipFitGymOwner.getAadharNumber());
                     }
                     break;
                 }
                 case 3: {
-                    List<FlipFitGymCustomer> customersList = new ArrayList<>();
+                    List<FlipFitGymCustomer> customersList = adminService.getUserList();
                     for (FlipFitGymCustomer customers : customersList) {
                         System.out.println("CustomerID: " + customers.getUserId() + " CustomerName :" + customers.getUserName());
                     }
@@ -48,7 +60,7 @@ public class Admin {
                     System.out.println("Type the ownerId of owner for which you wish to view Centres");
                     Scanner in = new Scanner(System.in);
                     int ownerId = in.nextInt();
-                    List<FlipFitGymCentre> flipFitGymCentres = new ArrayList<>();
+                    List<FlipFitGymCentre> flipFitGymCentres = adminService.getGymCentreUsingOwnerId(ownerId);
                     if (flipFitGymCentres.isEmpty()) {
                         System.out.println("No centres found for owner ID " + ownerId);
                     } else {
@@ -64,6 +76,7 @@ public class Admin {
                     String userType = sc.next();
 
                     if (userType.equalsIgnoreCase("Customer")) {
+                        //changes required here
                         List<FlipFitGymCustomer> customersList = new ArrayList<>();
                         for (FlipFitGymCustomer customer : customersList) {
                             System.out.println("CustomerID: " + customer.getUserId() + " CustomerName: " + customer.getUserName());
@@ -73,6 +86,7 @@ public class Admin {
                         // TODO: Implement customer deletion logic
                         System.out.println("Customer with ID " + customerId + " has been deleted.");
                     } else if (userType.equalsIgnoreCase("Owner")) {
+                        //changes required here
                         List<FlipFitGymOwner> flipFitGymOwnerList = new ArrayList<>();
                         for (FlipFitGymOwner owner : flipFitGymOwnerList) {
                             System.out.println("Owner ID: " + owner.getUserId() + " Aadhar: " + owner.getAadharNumber());
