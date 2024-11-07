@@ -1,7 +1,6 @@
 package com.flipfit.dao.interfaces;
 
 import com.flipfit.bean.FlipFitSlots;
-
 import java.util.List;
 
 //This interface defines methods for managing slot operations within the FlipFit Gym application.

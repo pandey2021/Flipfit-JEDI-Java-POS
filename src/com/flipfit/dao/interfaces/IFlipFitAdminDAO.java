@@ -1,7 +1,6 @@
 package com.flipfit.dao.interfaces;
 
 import com.flipfit.bean.*;
-
 import java.util.List;
 
 //This interface defines methods for managing admin operations within the FlipFit Gym application.

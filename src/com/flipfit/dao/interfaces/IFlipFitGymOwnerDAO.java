@@ -4,7 +4,6 @@ import com.flipfit.bean.FlipFitGymCentre;
 import com.flipfit.bean.FlipFitGymCustomer;
 import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.bean.FlipFitUser;
-
 import java.util.List;
 
 //This interface defines methods for managing gym owner operations within the FlipFit Gym application.

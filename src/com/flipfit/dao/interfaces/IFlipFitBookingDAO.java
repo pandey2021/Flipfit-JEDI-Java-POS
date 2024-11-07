@@ -3,7 +3,6 @@ package com.flipfit.dao.interfaces;
 import com.flipfit.bean.FlipFitBooking;
 import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.bean.FlipFitUser;
-
 import java.util.ArrayList;
 import java.util.List;
 //This interface defines methods for managing bookings within the FlipFit Gym application.
