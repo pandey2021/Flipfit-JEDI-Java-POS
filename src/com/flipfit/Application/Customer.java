@@ -1,12 +1,9 @@
 package com.flipfit.Application;
 
-import com.flipfit.bean.FlipFitGymCentre;
-import com.flipfit.bean.FlipFitGymCustomer;
-import com.flipfit.bean.FlipFitSlots;
-import com.flipfit.bean.FlipFitUser;
+import com.flipfit.bean.*;
 import com.flipfit.business.BookingsBusiness;
-import com.flipfit.business.FlipFitGymCentreBusiness;
 import com.flipfit.business.FlipFitGymCustomerBusiness;
+import com.flipfit.dao.classes.FlipFitBookingDAOImpl;
 import com.flipfit.dao.classes.FlipFitGymCentreDAOImpl;
 
 import java.util.ArrayList;
@@ -85,30 +82,64 @@ public class Customer {
                         FlipFitGymCentreDAOImpl flipFitGymCentreDAO=new FlipFitGymCentreDAOImpl();
                         ArrayList<FlipFitGymCentre> centreList=flipFitGymCentreDAO.viewCentres(city);
                         for (FlipFitGymCentre centre : centreList) {
-                            System.out.println(centre.getCentreID());
-                            System.out.println(centre.getOwnerID());
-                            System.out.println(centre.getCapacity());
+                            System.out.println("centreid "+centre.getCentreID());
+                            System.out.println("ownerid "+centre.getOwnerID());
+                            System.out.println("capacity "+centre.getCapacity());
                             System.out.println();
                         }
                         break;
                     }
                     case 3: {
+                        //view gymcentres>choose a gymcentre> choose slot from availableslot>>bookslot
                         System.out.println("Make Booking:");
-                        System.out.println("Enter the centre ID for booking:");
+                        System.out.println("Enter the city for booking:");
+                        String city = sc.next();
+                        FlipFitGymCentreDAOImpl flipFitGymCentreDAO=new FlipFitGymCentreDAOImpl();
+                        ArrayList<FlipFitGymCentre> centreList=flipFitGymCentreDAO.viewCentres(city);
+                        for (FlipFitGymCentre centre : centreList) {
+                            System.out.println("centreid "+centre.getCentreID());
+                            System.out.println("ownerid "+centre.getOwnerID());
+                            System.out.println("capacity "+centre.getCapacity());
+                            System.out.println();
+                        }
+                        System.out.println("Enter the centreId for booking:");
                         int centreId = sc.nextInt();
+                        List<FlipFitSlots> flipFitSlotsList=flipFitGymCentreDAO.viewAvailableSlots(centreId);
+                        for (FlipFitSlots slots : flipFitSlotsList) {
+                            System.out.println("slotid "+slots.getSlotId());
+                            System.out.println("slottime "+slots.getSlotTime());
+                            System.out.println("seatsavailable "+slots.getSeatsAvailable());
+                            System.out.println();
+                        }
                         System.out.println("Enter the slot ID you want to book:");
                         int slotId = sc.nextInt();
-                        BookingsBusiness.makeBooking(userId, centreId, slotId);
+                        System.out.println("Enter the slot time you want to book:");
+                        int slotTime = sc.nextInt();
+                        BookingsBusiness.makeBooking(userId, centreId, slotId,slotTime);
                         System.out.println("Booking successful.");
                         break;
                     }
                     case 4: {
+                        //fetch all slots for given userid
                         System.out.println("View Booked Slots:");
-                        System.out.println("Type 2. If you wish to cancel");
+                        FlipFitBookingDAOImpl flipFitBookingDAO=new FlipFitBookingDAOImpl();
+                        List<FlipFitBooking> flipFitBookings=flipFitBookingDAO.getAllBookings(userId);
+                        for (FlipFitBooking booking : flipFitBookings) {
+                            System.out.println("bookingid "+booking.getBookingId());
+                            System.out.println("slotid "+booking.getSlotId());
+                            System.out.println("slottime "+booking.getSlotTime());
+                            System.out.println();
+                        }
+                        System.out.println("Type 2. If you wish to cancel else type to go to menu");
                         choice = sc.nextInt();
                         if (choice == 2) {
                             System.out.println("Choose the booking ID you wish to cancel");
                             int bookingId = sc.nextInt();
+                            boolean flag=false;
+                            flag=flipFitBookingDAO.deleteBooking(bookingId);
+                            if(flag){
+                                System.out.println("Booking deleted successfully.");
+                            }
                         }
                         break;
                     }
