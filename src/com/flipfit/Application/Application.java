@@ -52,6 +52,7 @@ public class Application {
                             }
                             case "Admin": {
                                 // admin menu
+
                                 FlipFitAdmin admin= new FlipFitAdmin();
                                 admin.setEmailID(username);
                                 admin.setPassword(password);
