@@ -4,6 +4,10 @@ import com.flipfit.bean.FlipFitAdmin;
 import com.flipfit.bean.FlipFitGymCustomer;
 import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.bean.FlipFitUser;
+import com.flipfit.business.FlipFitAdminBusiness;
+import com.flipfit.business.interfaces.IFlipFitAdmin;
+import com.flipfit.dao.classes.FlipFitAdminDAOImpl;
+
 
 import java.util.*;
 
@@ -48,16 +52,18 @@ public class Application {
                             }
                             case "Admin": {
                                 // admin menu
-                                FlipFitAdmin admin = new FlipFitAdmin();
+                                FlipFitAdmin admin= new FlipFitAdmin();
                                 admin.setEmailID(username);
                                 admin.setPassword(password);
+                                FlipFitAdminDAOImpl adminDAO = new FlipFitAdminDAOImpl();
+                                IFlipFitAdmin flipFitAdmin = new FlipFitAdminBusiness(adminDAO);
                                 try {
-                                    boolean res = true;
-                                    if (res) {
+                                    boolean res=flipFitAdmin.adminLogin(admin);
+                                    if(res) {
                                         System.out.println("Admin Menu");
                                         Admin.getAdminView();
                                     }
-                                } catch (Exception e) {
+                                }catch (Exception e){
                                     e.printStackTrace();
                                 }
                                 break;
