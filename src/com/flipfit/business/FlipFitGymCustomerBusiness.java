@@ -2,12 +2,15 @@ package com.flipfit.business;
 
 import com.flipfit.bean.*;
 import com.flipfit.business.interfaces.IFlipFitGymCustomer;
+import com.flipfit.dao.classes.FlipFitGymCustomerDAOImpl;
+import com.flipfit.dao.classes.FlipFitUserDAOImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class FlipFitGymCustomerBusiness implements IFlipFitGymCustomer {
+    private final FlipFitGymCustomerDAOImpl flipFitGymCustomerDAOImpl=new FlipFitGymCustomerDAOImpl();
 
     public static void updateCustomerProfile(int userId, String newContact) {
         //todo
@@ -43,20 +46,28 @@ public class FlipFitGymCustomerBusiness implements IFlipFitGymCustomer {
 
         return true;
     }
+    @Override
     public FlipFitGymCustomer editDetails(FlipFitGymCustomer flipFitGymCustomer){
-        return new FlipFitGymCustomer();
-
+        return flipFitGymCustomerDAOImpl.editDetails(flipFitGymCustomer);
     }
-
     @Override
     public FlipFitGymCustomer registerCustomer(FlipFitGymCustomer flipFitGymCustomer) {
+        FlipFitUser flipFitUser = new FlipFitUser();
+        flipFitUser.setPassword(flipFitGymCustomer.getPassword());
+        flipFitUser.setEmailID(flipFitGymCustomer.getEmailID());
+        flipFitUser.setPhoneNumber(flipFitGymCustomer.getPhoneNumber());
+        flipFitUser.setUserName(flipFitGymCustomer.getUserName());
+        flipFitUser.setRoleID(1);
+        flipFitGymCustomer.setRoleId(1);
 
-        return new FlipFitGymCustomer();
+        flipFitGymCustomerDAOImpl.addUser(flipFitUser);
+        return flipFitGymCustomerDAOImpl.addCustomer(flipFitGymCustomer, flipFitUser);
 
     }
     @Override
     public FlipFitGymCustomer login(FlipFitUser flipFitUser) {
 
-        return new FlipFitGymCustomer();
-    }
+        FlipFitUserDAOImpl userDAO = new FlipFitUserDAOImpl();
+        flipFitUser.setRoleID(1);
+        return userDAO.login(flipFitUser.getEmailID(), flipFitUser.getPassword());    }
 }

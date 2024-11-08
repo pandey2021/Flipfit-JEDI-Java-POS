@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
 
-
+    @Override
     public List<FlipFitSlots> viewBookedSlots(int userID) {
         List<FlipFitSlots> bookedSlots = new ArrayList<>();
         String sql = "SELECT * FROM Booking WHERE userID = ? and isDeleted=FALSE";
@@ -30,7 +30,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
         return bookedSlots;
     }
 
-
+    @Override
     public FlipFitBooking checkBookingConflicts(int userId, int slotTime) {
         String sql = "SELECT * FROM Booking WHERE userID = ? and slotTime = ?";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -53,7 +53,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
         return null;
     }
 
-
+    @Override
     public List<FlipFitGymCentre> viewCentres() {
         List<FlipFitGymCentre> gymcentres = new ArrayList<>();
         String sql = "SELECT * FROM GymCentre";
@@ -75,12 +75,12 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
         return gymcentres;
     }
 
-
+    @Override
     public boolean makePayment(int userID) {
         return false;
     }
 
-
+    @Override
     public void viewPaymentDetails(int userID) {
 
     }
@@ -89,7 +89,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
 
     }
 
-
+    @Override
     public FlipFitGymCustomer editDetails(FlipFitGymCustomer customer) {
         String sql = "UPDATE Customer SET city=?, pincode=? WHERE customerID=?";
 
@@ -97,23 +97,26 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
             stmt.setString(1, customer.getCity());
             stmt.setString(2, customer.getPinCode());
             stmt.setInt(3, customer.getUserId());
-            ResultSet rs = stmt.executeQuery();
-            if (rs == null) {
-                return null;
+            int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
+            if (affectedRows == 0) {
+                throw new SQLException("Updating GymCustomer failed, no rows affected.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        sql = "UPDATE User SET userName=?, password=? WHERE userID=?";
+        sql = "UPDATE User SET userName=?, roleID=?, emailID=?, phoneNumber=?, password=? WHERE userID=?";
 
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, customer.getUserName());
-            stmt.setString(2, customer.getPassword());
-            stmt.setInt(3, customer.getUserId());
-            ResultSet rs = stmt.executeQuery();
-            if (rs == null) {
-                return null;
+            stmt.setInt(2, customer.getRoleId());
+            stmt.setString(3, customer.getEmailID());
+            stmt.setString(4, customer.getPhoneNumber());
+            stmt.setString(5, customer.getPassword());
+            stmt.setInt(6, customer.getUserId());
+            int affectedRows = stmt.executeUpdate(); // Use executeUpdate() for INSERT
+            if (affectedRows == 0) {
+                throw new SQLException("Updating GymUser failed, no rows affected.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +124,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
 
         return customer;
     }
-
+    @Override
     public FlipFitUser addUser(FlipFitUser user) {
         String sql = "INSERT INTO User (userName, roleID, emailID, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -150,7 +153,7 @@ public class FlipFitGymCustomerDAOImpl implements IFlipFitGymCustomerDAO {
         return user;
     }
 
-
+    @Override
     public FlipFitGymCustomer addCustomer(FlipFitGymCustomer customer, FlipFitUser user) {
         String sql = "INSERT INTO Customer (customerID, city, pincode) VALUES (?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {

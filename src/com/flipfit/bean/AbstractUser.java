@@ -9,7 +9,7 @@ abstract class AbstractUser {
     private String city;
     private String pinCode;
     // Role: 0 -> customer, 1 -> gym owner
-    private int role;
+    private int roleId;
 
     public int getUserId() {
         return userId;
@@ -67,12 +67,12 @@ abstract class AbstractUser {
         this.pinCode = pinCode;
     }
 
-    public int getRole() {
-        return role;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
 }

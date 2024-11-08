@@ -4,10 +4,19 @@ import com.flipfit.bean.FlipFitAdmin;
 import com.flipfit.bean.FlipFitGymCustomer;
 import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.bean.FlipFitUser;
+import com.flipfit.business.FlipFitGymCustomerBusiness;
+import com.flipfit.business.FlipFitGymOwnerBusiness;
+import com.flipfit.business.interfaces.IFlipFitGymCustomer;
+import com.flipfit.business.interfaces.IFlipFitGymOwner;
+import com.flipfit.dao.classes.FlipFitAdminDAOImpl;
+import com.flipfit.dao.classes.FlipFitUserDAOImpl;
 
 import java.util.*;
 
 public class Application {
+    private static final IFlipFitGymCustomer flipFitGymCustomerBusiness = new FlipFitGymCustomerBusiness();
+    private static final IFlipFitGymOwner flipFitGymOwnerBusiness=new FlipFitGymOwnerBusiness();
+
     public static void main(String[] args) throws Error {
         try {
             Scanner in = new Scanner(System.in);
@@ -38,21 +47,25 @@ public class Application {
                         switch (role) {
                             case "Customer": {
                                 // customer menu
-                                FlipFitUser gymCustomer = new FlipFitUser();
-                                gymCustomer.setEmailID(username);
-                                gymCustomer.setPassword(password);
-
+                                FlipFitUserDAOImpl flipFitUserDAO = new FlipFitUserDAOImpl();
+                                FlipFitUser gymCustomer =flipFitUserDAO.loginAsCustomer(username, password);
+                                if(gymCustomer==null){
+                                    System.out.println("Customer not found");
+                                    return;
+                                }
                                 System.out.println("Customer Menu");
                                 Customer.getFlipFitCustomerMenu(gymCustomer);
                                 break;
                             }
                             case "Admin": {
                                 // admin menu
+                                boolean res = false;
                                 FlipFitAdmin admin = new FlipFitAdmin();
                                 admin.setEmailID(username);
                                 admin.setPassword(password);
+                                FlipFitAdminDAOImpl flipFitAdminDAO=new FlipFitAdminDAOImpl();
+                                res=flipFitAdminDAO.adminLogin(admin);
                                 try {
-                                    boolean res = true;
                                     if (res) {
                                         System.out.println("Admin Menu");
                                         Admin.getAdminView();
@@ -106,10 +119,12 @@ public class Application {
                         flipFitGymCustomer.setUserName(username);
                         flipFitGymCustomer.setCity(city);
                         flipFitGymCustomer.setPinCode(pinCode);
-                        flipFitGymCustomer.setRole(1);
+                        flipFitGymCustomer.setRoleId(1);
 
 
                         gymCustomer.setUserID(flipFitGymCustomer.getUserId());
+
+                        flipFitGymCustomerBusiness.registerCustomer(flipFitGymCustomer);
                         System.out.println("Registration completed");
                         System.out.println("Customer Menu");
 
@@ -145,12 +160,13 @@ public class Application {
                         flipFitOwner.setCity(city);
                         flipFitOwner.setPinCode(pinCode);
                         flipFitOwner.setUserName(username);
-                        flipFitOwner.setRole(2);
+                        flipFitOwner.setRoleId(2);
                         flipFitOwner.setGSTIN(gstNum);
                         flipFitOwner.setAadharNumber(aadharNumber);
                         flipFitOwner.setPanId(panId);
                         flipFitOwner.setIsApproved(false);
 
+                        flipFitGymOwnerBusiness.registerOwner(flipFitOwner);
 
                         System.out.println("Registration completed");
 

@@ -7,6 +7,7 @@ import com.flipfit.bean.FlipFitUser;
 import com.flipfit.business.BookingsBusiness;
 import com.flipfit.business.FlipFitGymCentreBusiness;
 import com.flipfit.business.FlipFitGymCustomerBusiness;
+import com.flipfit.dao.classes.FlipFitGymCentreDAOImpl;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -14,7 +15,6 @@ import java.util.Scanner;
 import java.util.List;
 
 public class Customer {
-
     public static void getFlipFitCustomerMenu(FlipFitUser gymCustomer) throws Error {
         try {
             int userId = gymCustomer.getUserID();
@@ -33,30 +33,63 @@ public class Customer {
                 switch (choice) {
                     case 1: {
                         System.out.println("Edit Profile:");
-                        System.out.println("Enter your new contact number:");
-                        String newContact = sc.next();
+                        System.out.println("Enter your email address:> ");
+                        String emailID = sc.next();
+                        System.out.println("Enter your phone number:> ");
+                        String phoneNumber = sc.next();
+                        System.out.println("Enter your city:> ");
+                        String city = sc.next();
+                        System.out.println("Enter your pin code:> ");
+                        String pinCode = sc.next();
+                        System.out.println("Enter your password:> ");
+                        String password = sc.next();
+                        System.out.println("Enter username: ");
+                        String username = sc.next();
+
+                        FlipFitGymCustomer flipFitGymCustomer = new FlipFitGymCustomer();
+                        flipFitGymCustomer.setEmailID(emailID);
+                        flipFitGymCustomer.setPassword(password);
+                        flipFitGymCustomer.setPhoneNumber(phoneNumber);
+                        flipFitGymCustomer.setUserName(username);
+                        flipFitGymCustomer.setCity(city);
+                        flipFitGymCustomer.setPinCode(pinCode);
+                        flipFitGymCustomer.setRoleId(1);
+                        flipFitGymCustomer.setUserId(userId);
+
+                        FlipFitGymCustomerBusiness flipFitGymCustomerBusiness=new FlipFitGymCustomerBusiness();
                         // TO-DO other updates
-                        FlipFitGymCustomerBusiness.updateCustomerProfile(userId, newContact);
+                        flipFitGymCustomerBusiness.editDetails(flipFitGymCustomer);
                         System.out.println("Profile updated successfully.");
                         break;
                     }
                     case 2: {
                         System.out.println("View Centres");
-                        List<FlipFitGymCentre> centreList = new ArrayList<>();
+                        //view all gymcentres
+//                        List<FlipFitGymCentre> centreList = new ArrayList<>();
+//                        for (FlipFitGymCentre centre : centreList) {
+//                            System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " PinCode is: " + centre.getPincode());
+//                        }
+//                        System.out.println("Choose a centre (via centre ID) you want to book slot in");
+//                        int centreId = sc.nextInt();
+//                        List<FlipFitSlots> slotsList = new ArrayList<>();
+//                        System.out.println("These are the available slots:");
+//                        for (FlipFitSlots flipFitSlots : slotsList) {
+//                            System.out.println("Slot Id is: " + flipFitSlots.getSlotId() + " Slot Timing is: " + flipFitSlots.getSlotTime() + " Availability is: " + flipFitSlots.getSeatsAvailable() + " CentreId is: " + flipFitSlots.getCentreId());
+//                        }
+//                        System.out.println("Give the startTime you wish to book via integer");
+//                        int startTime = sc.nextInt();
+//                        System.out.println("Give the centre ID: ");
+//                        int centreID = sc.nextInt();
+                        System.out.println("Enter city");
+                        String city=sc.next();
+                        FlipFitGymCentreDAOImpl flipFitGymCentreDAO=new FlipFitGymCentreDAOImpl();
+                        ArrayList<FlipFitGymCentre> centreList=flipFitGymCentreDAO.viewCentres(city);
                         for (FlipFitGymCentre centre : centreList) {
-                            System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " PinCode is: " + centre.getPincode());
+                            System.out.println(centre.getCentreID());
+                            System.out.println(centre.getOwnerID());
+                            System.out.println(centre.getCapacity());
+                            System.out.println();
                         }
-                        System.out.println("Choose a centre (via centre ID) you want to book slot in");
-                        int centreId = sc.nextInt();
-                        List<FlipFitSlots> slotsList = new ArrayList<>();
-                        System.out.println("These are the available slots:");
-                        for (FlipFitSlots flipFitSlots : slotsList) {
-                            System.out.println("Slot Id is: " + flipFitSlots.getSlotId() + " Slot Timing is: " + flipFitSlots.getSlotTime() + " Availability is: " + flipFitSlots.getSeatsAvailable() + " CentreId is: " + flipFitSlots.getCentreId());
-                        }
-                        System.out.println("Give the startTime you wish to book via integer");
-                        int startTime = sc.nextInt();
-                        System.out.println("Give the centre ID: ");
-                        int centreID = sc.nextInt();
                         break;
                     }
                     case 3: {

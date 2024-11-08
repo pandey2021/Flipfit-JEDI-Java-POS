@@ -38,7 +38,7 @@ public class FlipFitGymOwnerBusiness implements IFlipFitGymOwner {
 
     public FlipFitGymOwner registerOwner(FlipFitGymOwner GymOwner) {
         System.out.println("Registering Gym Owner: " + GymOwner.getUserName());
-        GymOwner.setRole(2); // Setting the role as a placeholder
+        GymOwner.setRoleId(2); // Setting the role as a placeholder
         return GymOwner; // Returning the provided object as a placeholder
     }
 
