@@ -14,6 +14,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
     Random rand = new Random();
     @Override
     public FlipFitGymCentre addCentre(FlipFitGymCentre centre) {
+
         String sql = "INSERT INTO GymCentre (ownerID, capacity, approved, city, state, pincode) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, centre.getOwnerID());
@@ -39,6 +40,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return centre;
     }
 
@@ -46,6 +48,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
     public List<FlipFitGymCentre> viewCentresByOwnerID(FlipFitGymOwner owner) {
         List<FlipFitGymCentre> gymcentres = new ArrayList<>();
         int userId = owner.getUserId();
+        System.out.println(userId);
         String sql = "SELECT centreID, ownerID, capacity, city, state, pincode FROM GymCentre where ownerID=?";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setInt(1, userId);
@@ -64,7 +67,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
+        System.out.println(gymcentres.size());
         return gymcentres;
     }
 
@@ -115,6 +118,7 @@ public class FlipFitGymOwnerDAOImpl implements IFlipFitGymOwnerDAO {
 
     @Override
     public FlipFitUser addUser(FlipFitUser user) {
+        System.out.println("readched");
         String sql = "INSERT INTO User (userName, roleID, emailID, phoneNumber, password) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getUserName());

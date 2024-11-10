@@ -19,7 +19,7 @@ public class Admin {
             FlipFitAdminDAOImpl adminUser = new FlipFitAdminDAOImpl();
             FlipFitAdminBusiness adminService = new FlipFitAdminBusiness(adminUser);
 
-//            IFlipFitAdminDAO adminDAO = new FlipFitAdminDAOImpl();
+            IFlipFitAdminDAO adminDAO = new FlipFitAdminDAOImpl();
 //            FlipFitAdminBusiness adminBusiness = new FlipFitAdminBusiness(adminDAO);
 
             System.out.println("1. View Pending Requests");

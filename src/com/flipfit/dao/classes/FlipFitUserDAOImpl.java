@@ -9,7 +9,23 @@ import java.util.Random;
 
 public class FlipFitUserDAOImpl implements IFlipFitUserDAO {
     Random rand = new Random();
+    public int getId(String emailID, String password) {
+        String sql = "SELECT userId from User where emailID=? and password=?";
+        try (Connection conn = GetConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, emailID);
+            stmt.setString(2, password);
 
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                   return  rs.getInt(1);
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     @Override
     public FlipFitUser loginAsCustomer(String emailID, String password) {
         String sql = "SELECT * from User where emailID=? and password=? and roleID=1";

@@ -14,6 +14,9 @@ import java.util.Scanner;
 
 public class GymOwner {
     public static void getFlipFitOwnerView(FlipFitUser gymOwner) throws Error {
+
+        FlipFitGymOwnerBusiness flipFitGymOwnerBusiness=new FlipFitGymOwnerBusiness();
+        flipFitGymOwnerBusiness.login(gymOwner);
         try {
             Scanner sc = new Scanner(System.in);
             int choice = 0;
@@ -49,19 +52,21 @@ public class GymOwner {
                         flipFitGymCentre.setState(state);
                         flipFitGymCentre.setPincode(pincode);
                         flipFitGymCentre.setApproved(true);
-
-
+                        flipFitGymOwnerBusiness.addCentre(flipFitGymCentre);
                         System.out.println("Gym Centre created successfully.");
                         break;
                     }
                     case 2: {
+
                         System.out.println("View Centres for the owner : " + gymOwner.getUserID());
                         FlipFitGymOwner flipFitGymOwner = new FlipFitGymOwner();
                         flipFitGymOwner.setUserId(gymOwner.getUserID());
-                        List<FlipFitGymCentre> centreList = new ArrayList<>();
+//                        System.out.println(gymOwner.getUserID());
+                        List<FlipFitGymCentre> centreList =flipFitGymOwnerBusiness.viewCentres(flipFitGymOwner);
                         for (FlipFitGymCentre centre : centreList) {
                             System.out.println("CentreID : " + centre.getCentreID() + " Capacity : " + centre.getCapacity() + " City : " + centre.getCity() + " State : " + centre.getState());
                         }
+
                         break;
                     }
                     case 3: {
@@ -74,10 +79,10 @@ public class GymOwner {
                         if (updateChoice == 1) {
                             System.out.println("Enter new capacity:");
                             int newCapacity = sc.nextInt();
-                           FlipFitGymCentreBusiness.updateCapacity(centreID, newCapacity);
+                            FlipFitGymCentreBusiness.updateCapacity(centreID, newCapacity);
                             System.out.println("Centre capacity updated successfully.");
                         } else if (updateChoice == 2) {
-                            System.out.println("Enter Slot ID to update:");
+                            System.out.println("Enter Slot I`D to update:");
                             int slotID = sc.nextInt();
                             System.out.println("Enter new seat availability for the slot:");
                             int newSeatsAvailable = sc.nextInt();
@@ -105,6 +110,9 @@ public class GymOwner {
                         break;
                     }
                     case 5: {
+                        gymOwner.setUserID(-1);
+                        gymOwner.setPassword(null);
+                        gymOwner.setEmailID(null);
                         System.out.println("Successful logout");
                     }
 

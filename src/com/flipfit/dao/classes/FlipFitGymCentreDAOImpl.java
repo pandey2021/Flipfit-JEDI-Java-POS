@@ -12,7 +12,7 @@ public class FlipFitGymCentreDAOImpl {
 
     public FlipFitGymCentre createGymCentre(FlipFitGymCentre FFGC){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection(
                     DBConstants.DB_URL,DBConstants.USER,DBConstants.PASSWORD);
 

@@ -4,6 +4,7 @@ import com.flipfit.bean.FlipFitAdmin;
 import com.flipfit.bean.FlipFitGymCustomer;
 import com.flipfit.bean.FlipFitGymOwner;
 import com.flipfit.bean.FlipFitUser;
+import com.flipfit.business.FlipFitGymOwnerBusiness;
 
 import java.util.*;
 
@@ -151,6 +152,8 @@ public class Application {
                         flipFitOwner.setPanId(panId);
                         flipFitOwner.setIsApproved(false);
 
+                        FlipFitGymOwnerBusiness flipFitGymOwnerBusiness = new FlipFitGymOwnerBusiness();
+                        flipFitGymOwnerBusiness.registerOwner(flipFitOwner);
 
                         System.out.println("Registration completed");
 
