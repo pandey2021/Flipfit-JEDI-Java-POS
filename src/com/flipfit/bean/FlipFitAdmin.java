@@ -4,6 +4,16 @@ public class FlipFitAdmin  {
     private int userId;
     private String password;
     private String emailID;
+
+    public int getRoleID() {
+        return roleID;
+    }
+
+    public void setRoleID(int roleID) {
+        this.roleID = roleID;
+    }
+
+    private int roleID;
     public void setUserID(int userId){
         this.userId=userId;
     }
