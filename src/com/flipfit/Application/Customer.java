@@ -62,30 +62,14 @@ public class Customer {
                     case 2: {
                         System.out.println("View Centres");
                         //view all gymcentres
-//                        List<FlipFitGymCentre> centreList = new ArrayList<>();
-//                        for (FlipFitGymCentre centre : centreList) {
-//                            System.out.println("CentreId is: " + centre.getCentreID() + " City is: " + centre.getCity() + " PinCode is: " + centre.getPincode());
-//                        }
-//                        System.out.println("Choose a centre (via centre ID) you want to book slot in");
-//                        int centreId = sc.nextInt();
-//                        List<FlipFitSlots> slotsList = new ArrayList<>();
-//                        System.out.println("These are the available slots:");
-//                        for (FlipFitSlots flipFitSlots : slotsList) {
-//                            System.out.println("Slot Id is: " + flipFitSlots.getSlotId() + " Slot Timing is: " + flipFitSlots.getSlotTime() + " Availability is: " + flipFitSlots.getSeatsAvailable() + " CentreId is: " + flipFitSlots.getCentreId());
-//                        }
-//                        System.out.println("Give the startTime you wish to book via integer");
-//                        int startTime = sc.nextInt();
-//                        System.out.println("Give the centre ID: ");
-//                        int centreID = sc.nextInt();
                         System.out.println("Enter city");
                         String city=sc.next();
                         FlipFitGymCentreDAOImpl flipFitGymCentreDAO=new FlipFitGymCentreDAOImpl();
                         ArrayList<FlipFitGymCentre> centreList=flipFitGymCentreDAO.viewCentres(city);
                         for (FlipFitGymCentre centre : centreList) {
-                            System.out.println("centreid "+centre.getCentreID());
-                            System.out.println("ownerid "+centre.getOwnerID());
-                            System.out.println("capacity "+centre.getCapacity());
-                            System.out.println();
+                            // Print details of each gym centre
+                            System.out.printf("Centre ID: %d%nOwner ID: %d%nCapacity: %d%n%n",
+                                    centre.getCentreID(), centre.getOwnerID(), centre.getCapacity());
                         }
                         break;
                     }
@@ -96,21 +80,19 @@ public class Customer {
                         String city = sc.next();
                         FlipFitGymCentreDAOImpl flipFitGymCentreDAO=new FlipFitGymCentreDAOImpl();
                         ArrayList<FlipFitGymCentre> centreList=flipFitGymCentreDAO.viewCentres(city);
-                        for (FlipFitGymCentre centre : centreList) {
-                            System.out.println("centreid "+centre.getCentreID());
-                            System.out.println("ownerid "+centre.getOwnerID());
-                            System.out.println("capacity "+centre.getCapacity());
-                            System.out.println();
-                        }
+                        centreList.forEach(centre ->
+                                System.out.printf("Centre ID: %d%nOwner ID: %d%nCapacity: %d%n%n",
+                                        centre.getCentreID(), centre.getOwnerID(), centre.getCapacity())
+                        );
+
                         System.out.println("Enter the centreId for booking:");
                         int centreId = sc.nextInt();
                         List<FlipFitSlots> flipFitSlotsList=flipFitGymCentreDAO.viewAvailableSlots(centreId);
-                        for (FlipFitSlots slots : flipFitSlotsList) {
-                            System.out.println("slotid "+slots.getSlotId());
-                            System.out.println("slottime "+slots.getSlotTime());
-                            System.out.println("seatsavailable "+slots.getSeatsAvailable());
-                            System.out.println();
-                        }
+                        flipFitSlotsList.forEach(slots ->
+                                System.out.printf("Slot ID: %d%nSlot Time: %s%nSeats Available: %d%n%n",
+                                        slots.getSlotId(), slots.getSlotTime(), slots.getSeatsAvailable())
+                        );
+
                         System.out.println("Enter the slot ID you want to book:");
                         int slotId = sc.nextInt();
                         System.out.println("Enter the slot time you want to book:");
@@ -124,12 +106,12 @@ public class Customer {
                         System.out.println("View Booked Slots:");
                         FlipFitBookingDAOImpl flipFitBookingDAO=new FlipFitBookingDAOImpl();
                         List<FlipFitBooking> flipFitBookings=flipFitBookingDAO.getAllBookings(userId);
-                        for (FlipFitBooking booking : flipFitBookings) {
-                            System.out.println("bookingid "+booking.getBookingId());
-                            System.out.println("slotid "+booking.getSlotId());
-                            System.out.println("slottime "+booking.getSlotTime());
-                            System.out.println();
-                        }
+
+                        flipFitBookings.forEach(booking ->
+                                System.out.printf("Booking ID: %d%nSlot ID: %d%nSlot Time: %s%n%n",
+                                        booking.getBookingId(), booking.getSlotId(), booking.getSlotTime())
+                        );
+
                         System.out.println("Type 2. If you wish to cancel else type to go to menu");
                         choice = sc.nextInt();
                         if (choice == 2) {
@@ -149,9 +131,7 @@ public class Customer {
                         if (paymentHistory.isEmpty()) {
                             System.out.println("No payment history found.");
                         } else {
-                            for (String payment : paymentHistory) {
-                                System.out.println(payment);
-                            }
+                            paymentHistory.forEach(payment -> System.out.println(payment));
                         }
                         break;
                     }
